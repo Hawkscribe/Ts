@@ -2,7 +2,7 @@ import express from "express";
 import cors from "cors";
 import{z} from 'zod';
 import { JWT_PASSWORD } from "./config";
-import  { ContentModel, UserModel } from './db';
+import  { ContentModel, LinkModel, UserModel } from './db';
 import jwt from "jsonwebtoken"; 
 const app=express();
 
@@ -19,6 +19,7 @@ app.use(cors());
 
 import { Request, Response } from 'express';
 import { middleware } from "./middleware";
+import { random } from "./util";
 
 app.post("/api/signup", async function (req: Request, res: Response) {
   const { name, password } = req.body;
@@ -97,18 +98,82 @@ res.json({
 return;
 })
 
-app.delete("/api/content",(req,res)=>{
+app.delete("/api/content",middleware,async(req:Request,res:Response)=>{
+const contentId=req.body.contentId;
+await ContentModel.deleteMany({
+contentId,
+//@ts-ignore
+userId:req.userId
+});
+res.json({
+ msg: "Deleted"
+})
+return;
+})
+
+app.post("/api/brain/share",middleware,async(req:Request,res:Response)=>{
+const share=req.body.share;
+if (share) {
+  const existingLink=await LinkModel.findOne({
+    //@ts-ignore
+    userId:req.userId
+  })
+  if (existingLink) {
+    res.json({
+      hash:existingLink.hash
+    })
+    return;
+  }
+  const hash=random(10);
+  await LinkModel.create({
+    //@ts-ignore
+    userId:req.userId,
+    hash:hash
+  })
+  res.json({
+    hash
+  })
+}
+else{
+   await LinkModel.deleteOne({
+    //@ts-ignore
+    userId:req.userId
+   })
+
+   res.json({
+    msg:"Deleted brain"
+   })
+}
 
 
 })
 
-app.post("/api/brain/share",(req,res)=>{
-
-
+app.get("/api/brain /:shareLink",async (req:Request,res:Response)=>{
+const hash=req.params.hash;
+const link=await LinkModel.findOne({
+hash
 })
+if (!link) {
+  res.json({msg:"Not able to share the link"});
+  return;
 
-app.get("/api/brain /:shareLink",(req,res)=>{
-
+}
+//userId
+const content=await ContentModel.find({
+  userId:link.userId
+})
+console.log(link);
+const user=await UserModel.findOne({
+  _id:link.userId
+})
+if (!user) {
+  console.log("User not found please try with different one");
+}
+res.json({
+  //@ts-ignore
+  username:user.username,
+  content:content
+})
 })
 
 
