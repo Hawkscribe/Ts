@@ -13,7 +13,7 @@ export default {
 600:"#95989c"
         },
       purple: {
-          200: "#dd99ddee",
+          200: "#d5daeb",
           500: "#9492db",
           600: "#7164c0",
         }
