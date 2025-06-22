@@ -7,6 +7,8 @@ export default {
   theme: {
     extend: {
       colors:{
+                customOklch: 'oklch(92.8% 0.006 264.531)',
+
         gray:{
 100:"#eeeeef",
 200:"e639ed",

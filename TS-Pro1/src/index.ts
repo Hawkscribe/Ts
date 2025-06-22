@@ -22,16 +22,16 @@ import { middleware } from "./middleware";
 import { random } from "./util";
 
 app.post("/api/signup", async function (req: Request, res: Response) {
-  const { name, password } = req.body;
+  const { username, password } = req.body;
 
-  if (!name || !password) {
+  if (!username || !password) {
     res.status(411).json({ msg: "Inputs required" });
     return;
   }
 
   try {
     const newUser = await UserModel.create({
-      username: name,
+      username: username,
       password: password,
     });
     res.status(200).json({ msg: `Created user with name ${newUser.username}` });
@@ -46,21 +46,21 @@ app.post("/api/signup", async function (req: Request, res: Response) {
 
 
 app.post("/api/signin",async function(req,res){
-    const {name,password}=req.body;
-    if (!name||!password) {
+    const {username,password}=req.body;
+    if (!username||!password) {
          res.status(401).json({msg:"Enter the name and password both"});
          return;
     }
 try {
     const user=await UserModel.findOne({
-        username:name,
+        username:username,
     })
     if (!user|| user.password!==password) {
         res.status(401).json({msg:"NOt found"});
         return;
     }   
 
-        const token=jwt.sign({userId:user._id,name:user.username},JWT_PASSWORD);
+        const token=jwt.sign({userId:user._id,username:user.username},JWT_PASSWORD);
         
         res.status(201).json({token});
     
@@ -73,10 +73,10 @@ try {
 app.post("/api/content",middleware,async (req:Request,res:Response)=>{
 const link =req.body.link;
 const type=req.body.type;
-
 await ContentModel.create({
 link,
 type,
+title:req.body.title,
 //@ts-ignore
 userId:req.userId,
 
