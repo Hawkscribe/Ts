@@ -24,8 +24,13 @@ const content=useContent();
           <Button onClick={async()=>{
             const response= await axios.post(`${BACKEND_URL}/api/brain/share`,{
               share:true
+            },{
+              headers:{
+                "Authorization":localStorage.getItem("token")
+              }
             });
             const shareUrl=`http://localhost:5173/share/${response.data.hash}`
+      alert(shareUrl);
           }}variant="secondary"text="ShareBrain"startIcon={<ShareIcon/>}></Button>
           </div>
         <div className="flex gap-4 p-4 flex-wrap">

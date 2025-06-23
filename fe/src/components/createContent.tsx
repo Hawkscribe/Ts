@@ -31,7 +31,7 @@ try {
 onClose();
 
 } catch (error) {
-    alert("Authetication error!!!");
+    alert("Authetication error!!! or the using the same tittle again!!!");
 }
 }
     return (

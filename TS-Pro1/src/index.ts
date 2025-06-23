@@ -100,7 +100,7 @@ return;
 
 app.delete("/api/content",middleware,async(req:Request,res:Response)=>{
 const contentId=req.body.contentId;
-await ContentModel.deleteMany({
+await ContentModel.deleteOne({
 contentId,
 //@ts-ignore
 userId:req.userId
