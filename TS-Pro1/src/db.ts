@@ -1,7 +1,11 @@
 
 import mongoose, {model, Schema} from "mongoose";
+const MONGO_URI=process.env.MONGO_URI;
+if (!MONGO_URI) {
+throw new Error("The mongo uri is not present");
+}
 try {
-    mongoose.connect("mongodb+srv://database1:database1@cluster0.hnt6bsw.mongodb.net/brainly");
+    mongoose.connect(MONGO_URI);
 
 } catch (error) {
 console.log("error in connecting to the database ");    

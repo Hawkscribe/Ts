@@ -12,6 +12,7 @@ import { SidebarItems } from "./SidebarItems";
 Brainly
       </div>
         <div className="pt-4">
+          For:
             <SidebarItems text="Twitter" icon={<Twitter/>}/>
             <SidebarItems text="Youtube" icon={<YouTube/>}/>
             </div>    

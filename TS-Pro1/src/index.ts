@@ -1,10 +1,16 @@
 import express from "express";
 import cors from "cors";
 import{z} from 'zod';
-import { JWT_PASSWORD } from "./config";
+import dotenv from "dotenv";
+dotenv.config(); 
+const JWT_PASSWORD=process.env.JWT_PASSWORD;
+if (!JWT_PASSWORD) {
+  throw new Error("JWT_PASSWORD is not defined in environment variables");
+}
 import  { ContentModel, LinkModel, UserModel } from './db';
 import jwt from "jsonwebtoken"; 
 const app=express();
+
 
 app.use(express.json());
 // const userSchema=z.object({
