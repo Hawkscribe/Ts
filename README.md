@@ -7,10 +7,10 @@
  <p>For doing the set up :
  
    <ul>
-     <li>Fork the repo</li>1) 
+     <li>Fork the repo</li>
      <li>Read the scripts file</li>
      <li>Go to the backend folder and then run npm run dev to start the backend locally on the system</li>
      <li>Go to the frontend folder and then type npm run dev for making the vite run on the localhost:5173 ......</li>
      </ul>
-     In this way you may be able to use the Application for storing all the important links you want.
+     In this way you may be able to use the Application for storing all the important links you want!
 </p>
