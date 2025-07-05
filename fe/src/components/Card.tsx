@@ -8,21 +8,21 @@ interface CardProps {
   title: string;
   link: string;
   type: "twitter" | "youtube";
-  contentId?: string; // ✅ Added to use for deletion
+  contentId?: string; 
 }
 
 export function Card({ title, link, type, contentId }: CardProps) {
   const onDelete = async () => {
     try {
       await axios.delete(`${BACKEND_URL}/api/content`, {
-        data: { contentId }, // ✅ send contentId in request body
+        data: { contentId }, 
         headers: {
-          Authorization: localStorage.getItem("token"), // ✅ send token if needed
+          Authorization: localStorage.getItem("token"), 
         },
       });
 
       alert("The block is being deleted");
-      window.location.reload(); // ✅ refresh to reflect deletion
+      window.location.reload(); 
     } catch (error) {
       alert("There is an error in the delete block");
     }
